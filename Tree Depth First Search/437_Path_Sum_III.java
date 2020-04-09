@@ -3,20 +3,22 @@ class Solution {
         if (root == null) {
             return 0;
         }
-
-        return traverseSubtree(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+        return helper(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
     }
 
-    private int traverseSubtree(TreeNode root, int sum) {
-        int result = 0;
+    private int helper(TreeNode root, int sum) {
         if (root == null) {
-            return result;
+            return 0;
         }
 
-        if (root.val == sum) {
-            ++result;
+        int count = 0;
+        if (sum - root.val == 0) {
+            ++count;
         }
 
-        return result + traverseSubtree(root.left, sum - root.val) + traverseSubtree(root.right, sum - root.val);
+        count += helper(root.left, sum - root.val);
+        count += helper(root.right, sum - root.val);
+
+        return count;
     }
 }
